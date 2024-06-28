@@ -5,6 +5,8 @@ import zlib
 import configparser
 import json
 import argparse
+import sys
+import shutil
 
 CONFIG_FILE = 'muxer_config.ini'
 
@@ -103,10 +105,10 @@ def mux_files(mkv_file, mkvmerge_path, overwrite, create_folders_option):
 
         if overwrite:
             os.remove(mkv_file)
-            os.rename(temp_filepath, new_filepath)
+            shutil.move(temp_filepath, new_filepath)
             print(f"Original file {mkv_filename} overwritten with new muxed file {new_filename}.")
         else:
-            os.rename(temp_filepath, new_filepath)
+            shutil.move(temp_filepath, new_filepath)
             print(f"New muxed file created: {new_filename}")
 
         print(f"Muxed subtitle tracks:")
@@ -123,6 +125,18 @@ def mux_files(mkv_file, mkvmerge_path, overwrite, create_folders_option):
         print(f"Error muxing file {mkv_filename}: {e}")
         if os.path.exists(temp_filepath):
             os.remove(temp_filepath)
+
+def find_mkvmerge():
+    if sys.platform == "darwin":  # macOS
+        common_paths = [
+            "/usr/local/bin/mkvmerge",
+            "/opt/homebrew/bin/mkvmerge",
+            "/usr/bin/mkvmerge"
+        ]
+        for path in common_paths:
+            if os.path.exists(path):
+                return path
+    return shutil.which("mkvmerge")
 
 def main():
     parser = argparse.ArgumentParser(description='MKV muxing script using mkvmerge.')
@@ -149,7 +163,10 @@ def main():
         return
 
     if not mkvmerge_path:
-        mkvmerge_path = input("Enter mkvmerge path: ")
+        mkvmerge_path = find_mkvmerge()
+        if not mkvmerge_path:
+            print("mkvmerge not found. Please install MKVToolNix and set the path manually.")
+            mkvmerge_path = input("Enter mkvmerge path: ")
         config['DEFAULT']['MKVMergePath'] = mkvmerge_path
         with open(CONFIG_FILE, 'w') as configfile:
             config.write(configfile)
