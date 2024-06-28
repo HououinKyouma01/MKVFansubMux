@@ -54,17 +54,20 @@ The script expects (or can create, if configured) the following directory struct
 
 ```
 working_directory/
-├── [Group] Series Name - 01 [HASH].mkv
+├── [Group] Series Name - 01 [WHATEVER][SOMETHING][HASH].mkv
 ├── subs/
 │   ├── [Group] Series Name - 01.ass
 │   ├── [Group] Series Name - 01_2.ass
-│   └── [Group] Series Name - 01_3[Honorifics].ass
+│   └── [Group] Series Name - 01_3[Something].ass
 ├── chapters/
 │   └── [Group] Series Name - 01.xml
 └── fonts/
     ├── font1.ttf
     └── font2.otf
 ```
+[Group] Series Name - 01.ass - default track
+[Group] Series Name - 01_N.ass - optional subtitle track
+[Group] Series Name - 01_N[Something].ass  - optional subtitle track with custom track name
 
 ## Configuration
 
