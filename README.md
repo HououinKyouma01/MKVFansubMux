@@ -3,6 +3,7 @@
 ## Overview
 
 The MKV Muxer Script is a powerful Python utility designed to automate the process of muxing (multiplexing) MKV files with additional subtitle tracks, chapters, and font attachments. This script is particularly useful for anime fansubbers and video enthusiasts who need to combine various elements into a single MKV container.
+Compatible with Windows / Linux / Mac OS
 
 ## Features
 
