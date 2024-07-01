@@ -99,10 +99,11 @@ The script expects the following directory structure:
 
 ```
 working_directory/
-├── [Group] Series Name - 01 [HASH].mkv
+├── [Group] Series Name - 01 [WHATEVER](OR WHATVER)[HASH].mkv
 ├── subs/
 │   ├── [Group] Series Name - 01.ass
 │   └── [Group] Series Name - 01_2[Honorifics].ass
+│   └── [Group] Series Name - 01_3.ass
 ├── chapters/
 │   └── [Group] Series Name - 01.xml
 └── fonts/
