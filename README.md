@@ -1,161 +1,163 @@
 # MKV Muxer Script
 
-## Overview
+Welcome to the MaikaMux Script! This powerful tool automates the process of muxing MKV files with subtitles, chapters, and fonts using mkvmerge. It's designed to be user-friendly and efficient. Made especially to mke life easier for anime subtitle enthusiasts.
+I started this project a long time ago, several fansub groups used it. It was written in C#, but due to the fact that I use different op systems, I decided to rewrite it to a more universal language. 
 
-The MKV Muxer Script is a powerful Python utility designed to automate the process of muxing (multiplexing) MKV files with additional subtitle tracks, chapters, and font attachments. This script is particularly useful for anime fansubbers and video enthusiasts who need to combine various elements into a single MKV container.
-Compatible with Windows / Linux / Mac OS
+## ✨ Features
 
-## Features
+- 🎞️ Automatically mux MKV files with matching subtitles, chapters, and fonts
+- 🌈 Colorful and informative console output
+- 📊 Real-time progress bar during muxing
+- 🔧 Configurable settings via command-line arguments or config file
+- 📁 Automatic creation of necessary folders (optional)
+- 📝 Detailed logging of warnings and errors (optional)
+- 🖥️ Cross-platform support (Windows, macOS, Linux)
 
-- Automatically detects and muxes multiple subtitle tracks
-- Adds chapter files if available
-- Includes font attachments
-- Cleans existing subtitles, chapters, and attachments before muxing
-- Supports custom track naming for subtitle files
-- Calculates and updates CRC32 hash in the filename
-- Configurable mkvmerge path and overwrite settings
-- Option to automatically create necessary folders (subs, chapters, fonts)
+## 🚀 Installation
 
-## Requirements
+### Prerequisites
 
 - Python 3.6 or higher
-- mkvmerge (part of MKVToolNix)
+- MKVToolNix (mkvmerge)
+- Required Python modules: colorama
 
-## Installation
+### Windows
 
-1. Ensure you have Python 3.6+ installed on your system.
-2. Install MKVToolNix on your system and make sure `mkvmerge` is accessible from the command line.
-3. Download the `merge.py` script to your local machine.
+1. Install Python from [python.org](https://www.python.org/downloads/windows/)
+2. Install MKVToolNix from [mkvtoolnix.download](https://mkvtoolnix.download/downloads.html#windows)
+3. Open Command Prompt and install required Python modules:
+   ```
+   pip install colorama
+   ```
+4. Download the `maika-mux.py` script from this repository
 
-## Usage
+### macOS
+
+1. Install Homebrew if not already installed:
+   ```
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+2. Install Python and MKVToolNix:
+   ```
+   brew install python mkvtoolnix
+   ```
+3. Install required Python modules:
+   ```
+   pip3 install colorama
+   ```
+4. Download the `maika-mux.py` script from this repository
+
+### Linux
+
+1. Install Python, pip, and MKVToolNix:
+   ```
+   sudo apt-get update
+   sudo apt-get install python3 python3-pip mkvtoolnix
+   ```
+2. Install required Python modules:
+   ```
+   pip3 install colorama
+   ```
+3. Download the `maika-mux.py` script from this repository
+
+## 🎮 Usage
 
 ### Basic Usage
 
-To use the script with default settings:
+Run the script in the directory containing your MKV files:
 
 ```
-python merge.py [path_to_mkv_file_or_directory]
+python maika-mux.py
 ```
 
-If no path is provided, the script will process all MKV files in the current directory.
+### Specifying Paths
+
+You can specify one or more paths to MKV files or directories:
+
+```
+python maika-mux.py path/to/file.mkv path/to/directory
+```
 
 ### Command-line Options
 
-- `--overwrite`: Overwrite original files (default: False)
-- `--config`: Edit the configuration file
+- `--overwrite`: Overwrite original files (default: True)
+- `--no-overwrite`: Do not overwrite original files
+- `--create-folders`: Create necessary folders (default: True)
+- `--no-create-folders`: Do not create folders
+- `--save-log`: Save mux log (default: True)
+- `--no-save-log`: Do not save mux log
+- `--config`: Edit configuration file
 
 Example:
 ```
-python merge.py /path/to/mkv/files --overwrite
+python maika-mux.py --no-overwrite --no-create-folders --no-save-log path/to/files
 ```
 
-### Directory Structure
+## 🗂️ Directory Structure
 
-The script expects (or can create, if configured) the following directory structure:
+The script expects the following directory structure:
 
 ```
 working_directory/
-├── [Group] Series Name - 01 [WHATEVER][SOMETHING][HASH].mkv
+├── [Group] Series Name - 01 [HASH].mkv
 ├── subs/
 │   ├── [Group] Series Name - 01.ass
-│   ├── [Group] Series Name - 01_2.ass
-│   └── [Group] Series Name - 01_3[Something].ass
+│   └── [Group] Series Name - 01_2[Honorifics].ass
 ├── chapters/
 │   └── [Group] Series Name - 01.xml
 └── fonts/
     ├── font1.ttf
     └── font2.otf
 ```
-[Group] Series Name - 01.ass - default track
-[Group] Series Name - 01_N.ass - optional subtitle track
-[Group] Series Name - 01_N[Something].ass  - optional subtitle track with custom track name
 
-## Configuration
+## ⚙️ Configuration
 
-On first run, the script will create a configuration file `muxer_config.ini` in the same directory as the script. You can edit this file directly or use the `--config` option to set:
+The script creates a `muxer_config.ini` file to store settings. You can edit this file directly or use the `--config` option:
 
-- Path to mkvmerge
-- Whether to overwrite original files by default
-- Whether to create necessary folders (subs, chapters, fonts) if they don't exist
-
-### Folder Creation Option
-
-The script includes an option to automatically create the necessary folders (subs, chapters, fonts) if they don't exist. This option is set to `True` by default. You can change this setting in the configuration file or through the `--config` command-line option.
-
-To change this setting:
-
-1. Run the script with the `--config` option:
-   ```
-   python merge.py --config
-   ```
-2. When prompted, enter your preference for creating folders (True/False).
-
-Alternatively, you can directly edit the `muxer_config.ini` file and change the `CreateFolders` value:
-
-```ini
-[DEFAULT]
-MKVMergePath = /path/to/mkvmerge
-OverwriteOriginal = True
-CreateFolders = True
+```
+python maika-mux.py --config
 ```
 
-## Functions
+Settings in the config file:
+- `MKVMergePath`: Path to the mkvmerge executable
+- `OverwriteOriginal`: Whether to overwrite original files (True/False)
+- `CreateFolders`: Whether to create necessary folders if they don't exist (True/False)
+- `SaveMuxLog`: Whether to save muxing logs (True/False)
 
-### `calculate_crc32(file_path)`
+## 📋 Logging
 
-Calculates the CRC32 hash of a given file.
+If enabled, warnings and errors are logged to `mux.log.txt` in the same directory as the MKV file. The log format is as follows:
 
-### `load_config()`
+```
+[YYYY-MM-DD HH:MM:SS]
+WARNINGS FOR:
+[filename.mkv]
 
-Loads or creates the configuration file.
+Warning:
+[filename.ass] | warning message
+The following line will be skipped:
+___________________________________________________
+Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0,0,0,,Example text
+___________________________________________________
 
-### `extract_file_info(filename)`
+```
 
-Extracts group name, series name, episode number, and hash from the filename.
+## 🎨 Color Coding
 
-### `find_files(directory, base_name, ext)`
+The console output uses colors for better readability:
+- 🔵 Cyan: Muxing process headers
+- 🟢 Green: Progress bar and success messages
+- 🟡 Yellow: General information and warnings
+- 🔴 Red: Errors and important file names
 
-Finds files matching the given base name and extension in the specified directory.
-
-### `get_track_name(group_name, file_name, index)`
-
-Generates a track name for subtitle files, supporting custom naming for additional tracks.
-
-### `create_folders(mkv_dir)`
-
-Creates the necessary folders (subs, chapters, fonts) if they don't exist.
-
-### `mux_files(mkv_file, mkvmerge_path, overwrite, create_folders_option)`
-
-The main function that performs the muxing operation. It:
-1. Creates necessary folders if the option is enabled
-2. Extracts file information
-3. Finds associated subtitle, chapter, and font files
-4. Constructs the mkvmerge command
-5. Executes the muxing process
-6. Handles file renaming and cleanup
-
-## Customization
-
-### Subtitle Track Naming
-
-The script supports custom naming for additional subtitle tracks. If a subtitle file is named with a pattern like `_2[Honorifics]`, the resulting track name will be "Group Name - Honorifics" instead of "Group Name (Track 2)".
-
-### Font Attachments
-
-All font files in the `fonts/` directory will be attached to the MKV file automatically.
-
-## Troubleshooting
-
-If you encounter any issues:
-
-1. Ensure mkvmerge is correctly installed and its path is set in the configuration.
-2. Check that your directory structure matches the expected format, or enable the folder creation option.
-3. Verify that you have the necessary permissions to read/write files in the working directory.
-4. If the script fails, it will print an error message. Check the console output for details.
-
-## License
+## 📄 License
 
 This script is released under the MIT License. See the LICENSE file for details.
 
-I DO NOT TAKE RESPONSIBILITY FOR PROGRAM MALFUNCTION, DATA LOSS OR ANYTHING ELSE.
+## 🙏 Acknowledgements
+
+This script uses [MKVToolNix](https://mkvtoolnix.download/) for muxing operations. Many thanks to the MKVToolNix team for their fantastic work!
+
+---
+
+Happy muxing! 🎥✨
