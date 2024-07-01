@@ -159,5 +159,3 @@ This script is released under the MIT License. See the LICENSE file for details.
 This script uses [MKVToolNix](https://mkvtoolnix.download/) for muxing operations. Many thanks to the MKVToolNix team for their fantastic work!
 
 ---
-
-Happy muxing! 🎥✨
