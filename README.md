@@ -1,4 +1,4 @@
-# MKV Muxer Script
+# MaikaMux Script
 
 Welcome to the MaikaMux Script! This powerful tool automates the process of muxing MKV files with subtitles, chapters, and fonts using mkvmerge. It's designed to be user-friendly and efficient. Made especially to mke life easier for anime subtitle enthusiasts.
 I started this project a long time ago, several fansub groups used it. It was written in C#, but due to the fact that I use different op systems, I decided to rewrite it to a more universal language. 
