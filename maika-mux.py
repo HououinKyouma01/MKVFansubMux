@@ -10,10 +10,19 @@ import shutil
 from datetime import datetime
 from colorama import init, Fore, Style
 
+def get_script_path():
+    if getattr(sys, 'frozen', False):
+        # Running as compiled executable
+        return os.path.dirname(sys.executable)
+    else:
+        # Running as a script
+        return os.path.dirname(os.path.abspath(__file__))
+
 # Initialize colorama
 init()
 
-CONFIG_FILE = 'muxer_config.ini'
+SCRIPT_DIR = get_script_path()
+CONFIG_FILE = os.path.join(SCRIPT_DIR, 'muxer_config.ini')
 
 def calculate_crc32(file_path):
     with open(file_path, 'rb') as f:
@@ -43,12 +52,12 @@ def load_config():
     if 'CreateFolders' not in config['DEFAULT']:
         config['DEFAULT']['CreateFolders'] = 'True'
 
+    if 'SaveMuxLog' not in config['DEFAULT']:
+        config['DEFAULT']['SaveMuxLog'] = 'True'
+
     # Save config if it was modified or created
     with open(CONFIG_FILE, 'w') as configfile:
         config.write(configfile)
-	
-    if 'SaveMuxLog' not in config['DEFAULT']:
-        config['DEFAULT']['SaveMuxLog'] = 'True'
 
     return config
 
